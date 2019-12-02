@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import {
     Row,
     Col
@@ -49,7 +49,7 @@ class Header extends Component {
   async onDragEnd() {
     let items = this.state.items;
 
-    this.state.items.forEach((item, index) => {
+    Object.keys(this.state.items).forEach(index => {
       items[index].orderIndex = index;
     });
 
@@ -63,6 +63,26 @@ class Header extends Component {
 
     this.setState({ items });
   };
+
+  async deleteItem(itemToRemove) {
+    await fetch('/items/' + itemToRemove.id, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    console.log("Deleting item: " + itemToRemove.id)
+
+    let items = this.state.items;
+    let filteredItems = items.filter((item) => {
+      return item !== itemToRemove;
+    });
+
+    console.log(filteredItems);
+
+    this.setState({ filteredItems });
+  }
 
   render() {
     const {items, isLoading} = this.state;
@@ -80,15 +100,18 @@ class Header extends Component {
             {
               items.map((item, index) =>
               <li key={item.orderIndex} onDragOver={() => this.onDragOver(index)}>
-                <div
+                <span>
+                  <div
                   className="drag"
                   draggable
                   onDragStart={e => this.onDragStart(e, index)}
-                  onDragEnd={() => {this.onDragEnd()}}
+                  onDragEnd={this.onDragEnd}
                 >
                   <FontAwesomeIcon icon={faBars} />
-                </div>
+                  </div>
+                </span>
                 <span className="item-content">{item.orderIndex} - {item.name} - £{item.price}</span>
+                <span onClick={() => this.deleteItem(item)}><FontAwesomeIcon icon={faTrashAlt} /></span>
               </li>)
             }
           </ul>
