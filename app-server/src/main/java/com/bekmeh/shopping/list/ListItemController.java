@@ -22,7 +22,6 @@ public class ListItemController {
     @Autowired
     private ListItemRepository listItemRepository;
 
-
     @GetMapping
     public ResponseEntity<Iterable<ListItem>> getAllItems() {
         Iterable<ListItem> items = listItemRepository.findAll(Sort.by("orderIndex"));

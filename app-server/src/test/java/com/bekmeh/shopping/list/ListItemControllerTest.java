@@ -1,40 +1,44 @@
 package com.bekmeh.shopping.list;
 
-import com.bekmeh.shopping.ShoppingApplication;
 import com.google.gson.Gson;
 import org.junit.Assert;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.MockitoAnnotations;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = ShoppingApplication.class)
-@AutoConfigureMockMvc
 class ListItemControllerTest {
+
+    private MockMvc mockMvc;
+
+    @Mock
+    private ListItemRepository listItemRepository;
 
     @InjectMocks
     private ListItemController listItemController;
 
-    @MockBean
-    private ListItemRepository listItemRepository;
 
-    @Autowired
-    private MockMvc mockMvc;
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+        mockMvc = MockMvcBuilders.standaloneSetup(listItemController)
+                .build();
+    }
 
     @Test
     public void contextLoads() {
@@ -50,7 +54,8 @@ class ListItemControllerTest {
 
         List<ListItem> testItemList = Arrays.asList(testItem);
 
-        Mockito.when(listItemRepository.findAll(Sort.by("orderIndex"))).thenReturn(testItemList);
+        Mockito.when(listItemRepository.findAll(Sort.by("orderIndex")))
+                .thenReturn(testItemList);
 
         Gson gson = new Gson();
         String json = gson.toJson(testItemList);
