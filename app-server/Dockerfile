@@ -8,7 +8,7 @@ COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src
 
 # Build the spring boot app
-RUN gradle build -x test --no-daemon
+RUN gradle build --no-daemon
 
 
 # ----- STEP 2: SERVE -----

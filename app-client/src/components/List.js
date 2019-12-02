@@ -78,12 +78,12 @@ class Header extends Component {
     });
 
     let items = this.state.items;
+
     let filteredItems = items.filter((item) => {
       return item !== itemToRemove;
     });
 
-    this.setState({ filteredItems });
-    console.log(filteredItems)
+    this.setState({ items: filteredItems });
   }
 
   async addItem(e) {
@@ -109,6 +109,9 @@ class Header extends Component {
     items.push(newItemFromServer);
 
     this.setState({ items })
+
+    this.textInput.value = ""
+    this.price.value = ""
   }
 
   async handleItemCheck(e, item, index) {
