@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import {
+  Container
+} from 'reactstrap';
+
+import Header from './components/Header.js';
+import List from './components/List.js';
 import './App.css';
 
 class App extends Component {
@@ -24,15 +29,10 @@ class App extends Component {
 
     return (
       <div className="App">
-        <header className="App-header">
-          <h2>items</h2>
-          {
-            items.map(item =>
-            <div key={item.id}>
-              {item.id} - {item.name} - £{item.price}
-            </div>)
-          }
-        </header>
+        <Container>
+          <Header/>
+          <List/>
+        </Container>
       </div>
     );
   }
