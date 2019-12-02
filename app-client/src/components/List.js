@@ -107,6 +107,29 @@ class Header extends Component {
     this.setState({ items })
   }
 
+  async handleItemCheckoff(e, item, index) {
+    console.log("Checking off")
+    console.log(e)
+    console.log(item)
+
+    let newItem = item;
+    item.complete = true;
+
+    let updatedItems = this.state.items;
+    updatedItems[index] = newItem;
+
+    await fetch('/items/' + item.id, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newItem)
+    });
+
+    this.setState({ updatedItems });
+
+  }
+
   render() {
     const {items, isLoading} = this.state;
 
@@ -131,6 +154,9 @@ class Header extends Component {
             {
               items.map((item, index) =>
               <li key={item.orderIndex} onDragOver={() => this.onDragOver(index)}>
+                <span>
+                  <input type="checkbox" checked={item.complete} onChange={e => { this.handleItemCheckoff(e, item, index) }} />
+                </span>
                 <span>
                   <div
                   className="drag"

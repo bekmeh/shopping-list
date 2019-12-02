@@ -3,13 +3,17 @@ package com.bekmeh.shopping.list;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+/**
+ * ListItem entity, representing an item on the shopping list. In the JSON response, these will be ordered by the
+ * 'orderIndex' field.
+ */
 @Entity
 @Table(name = "list_items")
 public class ListItem {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     @NotNull
     private String name;
@@ -20,11 +24,13 @@ public class ListItem {
     @NotNull
     private Integer orderIndex;
 
-    public Long getId() {
+    private boolean complete;
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -52,5 +58,13 @@ public class ListItem {
 
     public void setOrderIndex(@NotNull Integer orderIndex) {
         this.orderIndex = orderIndex;
+    }
+
+    public boolean isComplete() {
+        return complete;
+    }
+
+    public void setComplete(boolean complete) {
+        this.complete = complete;
     }
 }

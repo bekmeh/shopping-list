@@ -1,7 +1,10 @@
 package com.bekmeh.shopping.list;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ListItemRepository extends CrudRepository<ListItem, Integer> {
+/**
+ * Repository for the ListItem entity, enabling CRUD operations.
+ */
+public interface ListItemRepository extends JpaRepository<ListItem, Integer> {
 
 }
