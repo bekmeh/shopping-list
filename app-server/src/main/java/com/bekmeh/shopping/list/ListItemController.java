@@ -1,38 +1,44 @@
 package com.bekmeh.shopping.list;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.List;
+import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("items")
 public class ListItemController {
 
-    private static final List<ListItem> DUMMY_LIST = Arrays.asList(new ListItem(1L, "item 1", 3.44));
-    private static final ListItem DUMMY_ITEM = new ListItem(1L, "item 1", 3.44);
+    // Access the bean auto-generated using the ListItemRepository interface
+    @Autowired
+    private ListItemRepository listItemRepository;
+
 
     @GetMapping
-    public List<ListItem> getAllItems() {
-        // TODO
-        return DUMMY_LIST;
+    public Iterable<ListItem> getAllItems() {
+        return listItemRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    public ListItem listItem() {
-        // TODO
-        return DUMMY_ITEM;
+    public ResponseEntity<?> getItem(@RequestParam final Long id) {
+        Optional<ListItem> item = listItemRepository.findById(id.intValue());
+
+        return item.map(response -> ResponseEntity.ok().body(response))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/{id}")
-    public List<ListItem> addItem() {
-        // TODO
-        return DUMMY_LIST;
+    public ResponseEntity<ListItem> addItem(@Valid @RequestBody ListItem item) {
+        ListItem newItem = listItemRepository.save(item);
+        return ResponseEntity.ok().body(newItem);
     }
 
     @DeleteMapping("/{id}")
-    public ListItem deleteItem() {
-        // TODO
-        return DUMMY_ITEM;
+    public ResponseEntity<?> deleteItem(@PathVariable Long id) {
+        listItemRepository.deleteById(id.intValue());
+        return ResponseEntity.ok().build();
     }
 }

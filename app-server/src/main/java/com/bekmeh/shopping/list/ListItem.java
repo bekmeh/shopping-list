@@ -1,26 +1,56 @@
 package com.bekmeh.shopping.list;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
+@Entity
+@Table(name = "list_items")
 public class ListItem {
 
-    private final Long id;
-    private final String name;
-    private final Double price;
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private Long id;
 
-    public ListItem(final Long id, final String name, final Double price) {
+    @NotNull
+    private String name;
+
+    @NotNull
+    private Double price;
+
+    @NotNull
+    private Integer orderIndex;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    @NotNull
+    public String getName() {
+        return name;
+    }
+
+    public void setName(@NotNull String name) {
         this.name = name;
+    }
+
+    @NotNull
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(@NotNull Double price) {
         this.price = price;
     }
 
-    public Long getId() {
-        return this.id;
+    public Integer getOrderIndex() {
+        return orderIndex;
     }
 
-    public String getName() {
-        return this.name;
-    }
-
-    public Double getPrice() {
-        return this.price;
+    public void setOrderIndex(@NotNull Integer orderIndex) {
+        this.orderIndex = orderIndex;
     }
 }
