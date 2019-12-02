@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
 import {
     Navbar,
-    NavbarBrand,
-    Nav,
-    NavItem,
-    NavLink,
-    NavbarText
+    NavbarBrand
   } from 'reactstrap';
-
-// import './Header.css';
 
 class Header extends Component {
 
@@ -20,13 +14,6 @@ class Header extends Component {
     return (
       <Navbar>
         <NavbarBrand>Shopping List</NavbarBrand>
-        {/* <Nav>
-            <NavItem>
-                <NavLink>
-                    Home
-                </NavLink>
-            </NavItem>
-        </Nav> */}
       </Navbar>
     );
   }
