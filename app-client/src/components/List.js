@@ -84,6 +84,29 @@ class Header extends Component {
     this.setState({ filteredItems });
   }
 
+  async addItem(e) {
+    e.preventDefault();
+
+    let newItem = {
+      name: this.textInput.value,
+      price: 0,
+      orderIndex: this.state.items.length + 1
+    };
+
+    await fetch('/items', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newItem)
+    });
+
+    let items = this.state.items;
+    items.push(newItem);
+
+    this.setState({ items })
+  }
+
   render() {
     const {items, isLoading} = this.state;
 
@@ -96,6 +119,14 @@ class Header extends Component {
         <Col></Col>
         <Col>
           <h2>items</h2>
+          <div>
+            <form>
+              <span>
+                <input type="text" className="form-control" name="item" placeholder="Enter new item" ref={(input) => this.textInput = input}></input>
+              </span>
+            </form>
+            <button onClick={this.addItem.bind(this)}>+</button>
+          </div>
           <ul>
             {
               items.map((item, index) =>
@@ -105,13 +136,13 @@ class Header extends Component {
                   className="drag"
                   draggable
                   onDragStart={e => this.onDragStart(e, index)}
-                  onDragEnd={this.onDragEnd}
+                  onDragEnd={this.onDragEnd.bind(this)}
                 >
                   <FontAwesomeIcon icon={faBars} />
                   </div>
                 </span>
                 <span className="item-content">{item.orderIndex} - {item.name} - £{item.price}</span>
-                <span onClick={() => this.deleteItem(item)}><FontAwesomeIcon icon={faTrashAlt} /></span>
+                <button onClick={() => this.deleteItem(item)}><FontAwesomeIcon icon={faTrashAlt} /></button>
               </li>)
             }
           </ul>
