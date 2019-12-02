@@ -77,16 +77,13 @@ class Header extends Component {
       }
     });
 
-    console.log("Deleting item: " + itemToRemove.id)
-
     let items = this.state.items;
     let filteredItems = items.filter((item) => {
       return item !== itemToRemove;
     });
 
-    console.log(filteredItems);
-
     this.setState({ filteredItems });
+    console.log(filteredItems)
   }
 
   async addItem(e) {
@@ -131,6 +128,7 @@ class Header extends Component {
 
     this.setState({ updatedItems });
 
+    // TODO: move ticked items to bottom of list
   }
 
   render() {
@@ -180,16 +178,16 @@ class Header extends Component {
                         <FontAwesomeIcon icon={faBars} />
                         </div>
                       </Col>
-                      <Col xs="1">
+                      <Col xs="2">
                         <input type="checkbox" checked={item.complete} onChange={e => { this.handleItemCheck(e, item, index) }} />
                       </Col>
-                      <Col xs="6" className="item-content">
+                      <Col xs="5" className="text-left">
                         {item.name}
                       </Col>
                       <Col xs="2">
                           £{item.price}
                         </Col>
-                      <Col xs="1" onClick={() => this.deleteItem(item)}>
+                      <Col onClick={() => this.deleteItem(item)}>
                         <FontAwesomeIcon icon={faTrashAlt} />
                       </Col>
                     </Row>
