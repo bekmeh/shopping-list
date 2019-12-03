@@ -56,11 +56,13 @@ The app was started using `create-react-app`, and contains two components (so fa
 If I had more than 6 hours to improve the stories I worked on, I would have:
 
 - added unit tests using [Jest](https://jestjs.io/)
-- error handling
-- split `List.js` into multiple components e.g. `NewItemForm.js`
+- added error handling
+- split `List.js` into multiple components e.g. `ListItem.js`
 - added a price total column underneath the tasks
 - moved checked-off tasks to the bottom of the list
-- button CSS more user-friendly
+- made button CSS more user-friendly
+- added currency format to prices
+- improved drag UI
 
 ### Spring Boot App
 
@@ -74,21 +76,21 @@ If I had more time, I would have:
 ## Resources
 
 ### Spring Boot App
-[Spring Initialiser](https://start.spring.io/)
-[Spring - REST service guide](https://spring.io/guides/gs/rest-service/)
-[Spring - Accessing data with MySQL](https://spring.io/guides/gs/accessing-data-mysql/)
-[Spring HTTP Put test example](https://www.logicbig.com/tutorials/spring-framework/spring-web-mvc/http-put-test.html)
+- [Spring Initialiser](https://start.spring.io/)
+- [Spring - REST service guide](https://spring.io/guides/gs/rest-service/)
+- [Spring - Accessing data with MySQL](https://spring.io/guides/gs/accessing-data-mysql/)
+- [Spring HTTP Put test example](https://www.logicbig.com/tutorials/spring-framework/spring-web-mvc/http-put-test.html)
 
 ### Docker
-[Dockerising React app article](https://medium.com/greedygame-engineering/so-you-want-to-dockerize-your-react-app-64fbbb74c217)
-[Spring Boot, React and Docker Compose example](https://www.callicoder.com/spring-boot-mysql-react-docker-compose-example/)
-[CRUD React and Spring Boot example](https://developer.okta.com/blog/2018/07/19/simple-crud-react-and-spring-boot)
-[Gradle and Docker](https://codefresh.io/docs/docs/learn-by-example/java/gradle/)
+- [Dockerising React app article](https://medium.com/greedygame-engineering/so-you-want-to-dockerize-your-react-app-64fbbb74c217)
+- [Spring Boot, React and Docker Compose example](https://www.callicoder.com/spring-boot-mysql-react-docker-compose-example/)
+- [CRUD React and Spring Boot example](https://developer.okta.com/blog/2018/07/19/simple-crud-react-and-spring-boot)
+- [Gradle and Docker](https://codefresh.io/docs/docs/learn-by-example/java/gradle/)
 
 ### React App
-[Drag and drop with React](https://www.freecodecamp.org/news/how-to-make-and-test-your-own-react-drag-and-drop-list-with-0-dependencies-6fb461603780/)
-[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)
-[Reactstrap](https://reactstrap.github.io/)
-[FontAwesome](https://programmingwithmosh.com/react/font-awesome-5-with-react/)
+- [Drag and drop with React](https://www.freecodecamp.org/news/how-to-make-and-test-your-own-react-drag-and-drop-list-with-0-dependencies-6fb461603780/)
+- [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)
+- [Reactstrap](https://reactstrap.github.io/)
+- [FontAwesome](https://programmingwithmosh.com/react/font-awesome-5-with-react/)
 
 
