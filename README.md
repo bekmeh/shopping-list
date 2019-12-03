@@ -29,7 +29,6 @@ You can then access the application from `http://localhost:3000`
 To run manually, without docker, you will need to install:
 
 - java 11
-- npm
 - yarn
 
 To run a MySQL database instance, either use docker or install MySQL manually. You will need to use the configuration found in the `docker-compose.yml` file under `services.database`.
@@ -51,7 +50,10 @@ The app uses `docker-compose`, and there are 3 containers:
 
 ### React App
 
-The app was started using `create-react-app`, and contains two components (so far) - `Header.js` and `List.js`. 
+The app was started using `create-react-app`, and contains 3 components (so far)
+- `Header.js`
+- `List.js`
+- `NewItemForm.js`
 
 If I had more than 6 hours to improve the stories I worked on, I would have:
 
