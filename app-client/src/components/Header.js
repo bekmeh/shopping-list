@@ -6,10 +6,6 @@ import {
 
 class Header extends Component {
 
-  state = {
-    
-  };
-
   render() {
     return (
       <Navbar>

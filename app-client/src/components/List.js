@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import {
     Row,
     Col,
     Card,
-    CardBody,
-    Form,
-    FormGroup,
-    Button
+    CardBody
   } from 'reactstrap';
+import NewItemForm from './NewItemForm';
 
 class Header extends Component {
 
@@ -19,6 +17,7 @@ class Header extends Component {
   };
 
   async componentDidMount() {
+    // Fetch items from the server
     const response = await fetch('/items');
     const body = await response.json();
     this.setState({ items: body, isLoading: false });
@@ -36,7 +35,7 @@ class Header extends Component {
     // Remove dragged item fron the main item list
     let items = this.state.items.filter(item => item !== this.draggedItem);
 
-    // Move dragged item's position in the item list
+    // Move dragged item's position/index in the item list
     items.splice(dragLocationIndex, 0, this.draggedItem);
 
     // Update items list
@@ -44,6 +43,7 @@ class Header extends Component {
   };
 
   onDragStart = (e, index) => {
+    // Set what data is being dragged
     this.draggedItem = this.state.items[index];
     this.startIndex = index;
     e.dataTransfer.effectAllowed = "move";
@@ -52,12 +52,14 @@ class Header extends Component {
   };
 
   async onDragEnd() {
+    // Update the items 'orderIndex' values to match their index in the array
     let items = this.state.items;
 
     Object.keys(this.state.items).forEach(index => {
       items[index].orderIndex = index;
     });
 
+    // Send all updated items to the server
     await fetch('/items', {
       method: 'PUT',
       headers: {
@@ -66,10 +68,12 @@ class Header extends Component {
       body: JSON.stringify(items)
     });
 
+    // Update the state
     this.setState({ items });
   };
 
-  async deleteItem(itemToRemove) {
+  async handleDeleteItem(itemToRemove) {
+    // Delete from the server
     await fetch('/items/' + itemToRemove.id, {
       method: 'DELETE',
       headers: {
@@ -77,6 +81,7 @@ class Header extends Component {
       }
     });
 
+    // Update the state
     let items = this.state.items;
 
     let filteredItems = items.filter((item) => {
@@ -86,12 +91,11 @@ class Header extends Component {
     this.setState({ items: filteredItems });
   }
 
-  async addItem(e) {
-    e.preventDefault();
-
+  async handleAddItem(textInput, price) {
+    // Create item and post to server
     let newItem = {
-      name: this.textInput.value,
-      price: this.price.value,
+      name: textInput,
+      price: price,
       orderIndex: this.state.items.length + 1
     };
 
@@ -105,19 +109,19 @@ class Header extends Component {
 
     const newItemFromServer = await response.json();
 
+    // Update the state
     let items = this.state.items;
     items.push(newItemFromServer);
 
     this.setState({ items })
-
-    this.textInput.value = ""
-    this.price.value = ""
   }
 
   async handleItemCheck(e, item, index) {
+    // Set new 'complete' value
     let newItem = item;
     newItem.complete = !item.complete;
 
+    // Update the item on server
     await fetch('/items/' + item.id, {
       method: 'PUT',
       headers: {
@@ -126,12 +130,11 @@ class Header extends Component {
       body: JSON.stringify(newItem)
     });
 
+    // Update the state
     let updatedItems = this.state.items;
     updatedItems[index] = newItem;
 
     this.setState({ updatedItems });
-
-    // TODO: move ticked items to bottom of list
   }
 
   render() {
@@ -145,29 +148,8 @@ class Header extends Component {
       <Row>
         <Col></Col>
         <Col xs="6">
-          <Row>
-            <Col xs="7">
-              <Form>
-                <FormGroup>
-                  <input type="text" className="form-control" name="item" placeholder="Enter new item" ref={(input) => this.textInput = input}></input>
-                </FormGroup>
-              </Form>
-            </Col>
-            <Col xs="3">
-              <Form>
-                <FormGroup>
-                  <input type="number" className="form-control" name="price" placeholder="Price" ref={(price) => this.price = price}></input>
-                </FormGroup>
-              </Form>
-            </Col>
-            <Col xs="2">
-              <Button onClick={this.addItem.bind(this)}>
-                <FontAwesomeIcon icon={faPlus} />
-              </Button>
-            </Col>
-          </Row>
-            {
-              items.map((item, index) =>
+          <NewItemForm handleAddItem={this.handleAddItem.bind(this)} />
+            { items.map((item, index) =>
                 <Card key={item.id} onDragOver={() => this.onDragOver(index)}>
                   <CardBody>
                     <Row>
@@ -189,14 +171,14 @@ class Header extends Component {
                       </Col>
                       <Col xs="2">
                           £{item.price}
-                        </Col>
-                      <Col onClick={() => this.deleteItem(item)}>
+                      </Col>
+                      <Col onClick={() => this.handleDeleteItem(item)}>
                         <FontAwesomeIcon icon={faTrashAlt} />
                       </Col>
                     </Row>
                   </CardBody>
-                </Card>)
-            }
+                </Card>
+            )}
         </Col>
         <Col></Col>
       </Row>
