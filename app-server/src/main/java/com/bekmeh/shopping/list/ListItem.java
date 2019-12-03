@@ -4,8 +4,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
- * ListItem entity, representing an item on the shopping list. In the JSON response, these will be ordered by the
- * 'orderIndex' field.
+ * ListItem entity, representing an item on the shopping list. The item contains an ID, name price and order index.
+ * In the JSON response, these will be ordered by the 'orderIndex' field.
  */
 @Entity
 @Table(name = "list_items")
