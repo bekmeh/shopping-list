@@ -1,4 +1,4 @@
-# Shopping List task
+# Shopping List
 
 This is a project to create a shopping list. The user can:
 
